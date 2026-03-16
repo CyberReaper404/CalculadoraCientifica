@@ -1,12 +1,12 @@
 # MM CALC Científica
 
-[![CI](https://github.com/CyberReaper404/CalculadoraCientifica/actions/workflows/ci.yml/badge.svg?style=flat-square)](https://github.com/CyberReaper404/CalculadoraCientifica/actions/workflows/ci.yml)
-![Último commit](https://img.shields.io/github/last-commit/CyberReaper404/CalculadoraCientifica?style=flat-square&label=%C3%9Altimo%20commit&color=2f2f2f)
-![Licença](https://img.shields.io/github/license/CyberReaper404/CalculadoraCientifica?style=flat-square&label=Licen%C3%A7a&color=111111)
 ![C#](https://img.shields.io/badge/C%23-239120?style=flat-square&logo=csharp&logoColor=white)
 ![.NET 8](https://img.shields.io/badge/.NET-8-512BD4?style=flat-square&logo=dotnet&logoColor=white)
 ![WPF](https://img.shields.io/badge/WPF-0C54C2?style=flat-square&logo=windows&logoColor=white)
 ![Windows](https://img.shields.io/badge/Windows-0078D6?style=flat-square&logo=windows11&logoColor=white)
+[![CI](https://github.com/CyberReaper404/CalculadoraCientifica/actions/workflows/ci.yml/badge.svg?style=flat-square)](https://github.com/CyberReaper404/CalculadoraCientifica/actions/workflows/ci.yml)
+![Licença](https://img.shields.io/github/license/CyberReaper404/CalculadoraCientifica?style=flat-square&label=Licen%C3%A7a&color=111111)
+![Último commit](https://img.shields.io/github/last-commit/CyberReaper404/CalculadoraCientifica?style=flat-square&label=%C3%9Altimo%20commit&color=2f2f2f)
 
 Calculadora científica para Windows desenvolvida em `C# + WPF`, com visual minimalista em preto e branco, foco em usabilidade, empacotamento profissional e cobertura de testes automatizados.
 
