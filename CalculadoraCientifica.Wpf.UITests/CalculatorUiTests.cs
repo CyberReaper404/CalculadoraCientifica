@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Windows.Automation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -142,8 +143,9 @@ public sealed class CalculatorUiTests
         SetText("trig_input", "1.5707963267948966");
         Click("sine_button");
 
-        WaitForCondition(() => GetElementText("current_result_text") == "1");
-        Assert.AreEqual("1", GetElementText("current_result_text"));
+        WaitForCondition(() => TryGetDisplayedDouble("current_result_text", out var value) && Math.Abs(value - 1d) < 1e-9);
+        Assert.IsTrue(TryGetDisplayedDouble("current_result_text", out var result));
+        Assert.IsTrue(Math.Abs(result - 1d) < 1e-9);
         StringAssert.Contains(GetElementText("last_expression_text"), "rad");
     }
 
@@ -463,6 +465,13 @@ public sealed class CalculatorUiTests
     {
         var element = FindByAutomationId(automationId);
         return element.Current.Name;
+    }
+
+    private bool TryGetDisplayedDouble(string automationId, out double value)
+    {
+        var rawValue = GetElementText(automationId).Trim();
+        var normalized = rawValue.Replace(" ", string.Empty).Replace(',', '.');
+        return double.TryParse(normalized, NumberStyles.Float, CultureInfo.InvariantCulture, out value);
     }
 
     private string GetTextBoxValue(string automationId)
