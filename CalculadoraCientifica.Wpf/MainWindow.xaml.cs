@@ -325,14 +325,6 @@ public partial class MainWindow : Window
             return false;
         }
 
-        foreach (var culture in ParseCultures)
-        {
-            if (double.TryParse(rawValue, ParseNumberStyles, culture, out value))
-            {
-                return true;
-            }
-        }
-
         var normalized = rawValue.Trim().Replace(" ", string.Empty);
 
         if (normalized.Contains(',') && normalized.Contains('.'))
@@ -346,7 +338,20 @@ public partial class MainWindow : Window
             normalized = normalized.Replace(',', '.');
         }
 
-        return double.TryParse(normalized, NumberStyles.Float, CultureInfo.InvariantCulture, out value);
+        if (double.TryParse(normalized, NumberStyles.Float, CultureInfo.InvariantCulture, out value))
+        {
+            return true;
+        }
+
+        foreach (var culture in ParseCultures)
+        {
+            if (double.TryParse(rawValue, ParseNumberStyles, culture, out value))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private AngleUnit GetAngleUnit() =>

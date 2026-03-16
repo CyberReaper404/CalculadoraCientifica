@@ -139,7 +139,7 @@ public sealed class CalculatorUiTests
         SelectComboBoxItem("angle_unit_combo", "Radianos");
         WaitForCondition(() => GetComboBoxSelection("angle_unit_combo") == "Radianos");
         SelectTab("scientific_tab");
-        SetText("trig_input", "1,5707963267948966");
+        SetText("trig_input", "1.5707963267948966");
         Click("sine_button");
 
         WaitForCondition(() => GetElementText("current_result_text") == "1");
