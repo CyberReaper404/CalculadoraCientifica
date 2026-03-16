@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="CalculadoraCientifica.Core/CalculadoraCientifica.Core.csproj" />
+  <Project Path="CalculadoraCientifica.Core.Tests/CalculadoraCientifica.Core.Tests.csproj" />
+  <Project Path="CalculadoraCientifica.Wpf/CalculadoraCientifica.Wpf.csproj" />
+  <Project Path="CalculadoraCientifica.Wpf.UITests/CalculadoraCientifica.Wpf.UITests.csproj" />
+</Solution>

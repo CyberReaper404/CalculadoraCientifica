@@ -1,0 +1,53 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore WPF app
+        run: dotnet restore .\CalculadoraCientifica.Wpf\CalculadoraCientifica.Wpf.csproj --locked-mode
+
+      - name: Restore tests
+        run: dotnet restore .\CalculadoraCientifica.Core.Tests\CalculadoraCientifica.Core.Tests.csproj --locked-mode
+
+      - name: Restore UI tests
+        run: dotnet restore .\CalculadoraCientifica.Wpf.UITests\CalculadoraCientifica.Wpf.UITests.csproj --locked-mode
+
+      - name: Build WPF app
+        run: dotnet build .\CalculadoraCientifica.Wpf\CalculadoraCientifica.Wpf.csproj -c Release --no-restore
+
+      - name: Build UI tests
+        run: dotnet build .\CalculadoraCientifica.Wpf.UITests\CalculadoraCientifica.Wpf.UITests.csproj -c Release --no-restore
+
+      - name: Test core
+        run: dotnet test .\CalculadoraCientifica.Core.Tests\CalculadoraCientifica.Core.Tests.csproj -c Release --no-restore --logger "trx;LogFileName=tests.trx"
+
+      - name: Test UI
+        env:
+          MM_CALC_EXE_PATH: ${{ github.workspace }}\CalculadoraCientifica.Wpf\bin\Release\net8.0-windows\MMCalcCientifica.exe
+        run: dotnet test .\CalculadoraCientifica.Wpf.UITests\CalculadoraCientifica.Wpf.UITests.csproj -c Release --no-build --logger "trx;LogFileName=ui-tests.trx"
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: |
+            .\CalculadoraCientifica.Core.Tests\TestResults\tests.trx
+            .\CalculadoraCientifica.Wpf.UITests\TestResults\ui-tests.trx

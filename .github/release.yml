@@ -1,0 +1,21 @@
+changelog:
+  categories:
+    - title: Product
+      labels:
+        - product
+        - ux
+    - title: Core Logic
+      labels:
+        - core
+        - math
+    - title: Testing
+      labels:
+        - tests
+        - qa
+    - title: Security and Release
+      labels:
+        - security
+        - release
+    - title: Other Changes
+      labels:
+        - "*"

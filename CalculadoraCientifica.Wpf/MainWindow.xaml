@@ -1,0 +1,574 @@
+<Window x:Class="CalculadoraCientifica.Wpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        Title="MM CALC Cient&#237;fica"
+        Width="1180"
+        Height="780"
+        MinWidth="1020"
+        MinHeight="640"
+        Background="{StaticResource WindowBackgroundBrush}"
+        WindowStartupLocation="CenterScreen">
+    <Grid Background="{StaticResource WindowGradientBrush}">
+        <Grid Margin="24">
+            <Ellipse Width="340"
+                     Height="340"
+                     Margin="0,-140,-120,0"
+                     HorizontalAlignment="Right"
+                     VerticalAlignment="Top"
+                     Fill="{StaticResource AmbientGlowBrush}"
+                     IsHitTestVisible="False" />
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2.1*" />
+                    <ColumnDefinition Width="22" />
+                    <ColumnDefinition Width="0.95*" />
+                </Grid.ColumnDefinitions>
+
+                <Border Padding="24"
+                        Background="{StaticResource PanelBrush}"
+                        BorderBrush="{StaticResource LineBrush}"
+                        BorderThickness="1"
+                        CornerRadius="28">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <StackPanel Grid.Row="0">
+                                <TextBlock FontFamily="Consolas"
+                                           FontSize="12"
+                                           Foreground="{StaticResource MutedTextBrush}"
+                                           Text="MM CALC // CIENT&#205;FICA" />
+                                <TextBlock Margin="0,6,0,0"
+                                           FontSize="28"
+                                           FontWeight="SemiBold"
+                                           Foreground="{StaticResource TextBrush}"
+                                           Text="Calculadora Cient&#237;fica" />
+                                <TextBlock x:Name="VersionText"
+                                           Margin="0,6,0,0"
+                                           Style="{StaticResource CaptionStyle}"
+                                           Text="Vers&#227;o 1.0.0" />
+                            </StackPanel>
+
+                            <Grid Grid.Row="1"
+                                  Margin="0,20,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock VerticalAlignment="Center"
+                                           Style="{StaticResource CaptionStyle}"
+                                           Text="Modo angular e a&#231;&#245;es r&#225;pidas." />
+
+                                <WrapPanel Grid.Column="1"
+                                           HorizontalAlignment="Right"
+                                           ItemHeight="46"
+                                           Orientation="Horizontal">
+                                    <ComboBox x:Name="AngleUnitCombo"
+                                              AutomationProperties.AutomationId="angle_unit_combo"
+                                              Width="180"
+                                              Margin="0,0,12,0"
+                                              SelectedIndex="0"
+                                              SelectionChanged="AngleUnitCombo_SelectionChanged"
+                                              Style="{StaticResource ComboStyle}">
+                                        <sys:String>Graus</sys:String>
+                                        <sys:String>Radianos</sys:String>
+                                    </ComboBox>
+                                    <Button Content="Copiar resultado"
+                                            AutomationProperties.AutomationId="copy_result_button"
+                                            Margin="0,0,12,0"
+                                            Click="CopyResultClick"
+                                            Style="{StaticResource ActionButtonStyle}" />
+                                    <Button Content="Limpar"
+                                            AutomationProperties.AutomationId="clear_inputs_button"
+                                            Margin="0,0,12,0"
+                                            Click="ClearInputsClick"
+                                            Style="{StaticResource ActionButtonStyle}" />
+                                    <Button Content="Sobre"
+                                            AutomationProperties.AutomationId="about_button"
+                                            Click="AboutClick"
+                                            Style="{StaticResource AccentButtonStyle}" />
+                                </WrapPanel>
+                            </Grid>
+                        </Grid>
+
+                        <Border Grid.Row="1"
+                                Margin="0,22,0,20"
+                                Padding="22"
+                                Background="{StaticResource PanelSoftBrush}"
+                                BorderBrush="{StaticResource StrongLineBrush}"
+                                BorderThickness="1"
+                                CornerRadius="24">
+                            <StackPanel>
+                                <TextBlock x:Name="LastExpressionText"
+                                           AutomationProperties.AutomationId="last_expression_text"
+                                           FontFamily="Consolas"
+                                           FontSize="13"
+                                           Foreground="{StaticResource MutedTextBrush}"
+                                           Text="Pronta para calcular" />
+                                <TextBlock x:Name="CurrentResultText"
+                                           AutomationProperties.AutomationId="current_result_text"
+                                           Margin="0,8,0,6"
+                                           FontFamily="Consolas"
+                                           FontSize="42"
+                                           FontWeight="SemiBold"
+                                           Foreground="{StaticResource TextBrush}"
+                                           Text="0" />
+                                <TextBlock x:Name="StatusText"
+                                           AutomationProperties.AutomationId="status_text"
+                                           Style="{StaticResource CaptionStyle}"
+                                           Text="Escolha um modo abaixo e calcule." />
+                            </StackPanel>
+                        </Border>
+
+                        <TabControl Grid.Row="2">
+                            <TabItem Header="B&#225;sica"
+                                     AutomationProperties.AutomationId="basic_tab">
+                                <ScrollViewer AutomationProperties.AutomationId="basic_tab_scroll_viewer"
+                                              Margin="0,18,0,0"
+                                              VerticalScrollBarVisibility="Auto"
+                                              HorizontalScrollBarVisibility="Disabled"
+                                              CanContentScroll="False">
+                                    <Grid Margin="0,0,4,8">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="16" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <StackPanel>
+                                                <TextBlock Style="{StaticResource LabelStyle}" Text="Primeiro n&#250;mero" />
+                                                <TextBox x:Name="BasicFirstInput"
+                                                         AutomationProperties.AutomationId="basic_first_input"
+                                                         Margin="0,8,0,0"
+                                                         Style="{StaticResource InputStyle}" />
+                                            </StackPanel>
+
+                                            <StackPanel Grid.Column="2">
+                                                <TextBlock Style="{StaticResource LabelStyle}" Text="Segundo n&#250;mero" />
+                                                <TextBox x:Name="BasicSecondInput"
+                                                         AutomationProperties.AutomationId="basic_second_input"
+                                                         Margin="0,8,0,0"
+                                                         Style="{StaticResource InputStyle}" />
+                                            </StackPanel>
+                                        </Grid>
+
+                                        <TextBlock Grid.Row="1"
+                                                   Margin="0,18,0,12"
+                                                   Style="{StaticResource CaptionStyle}"
+                                                   Text="Opera&#231;&#245;es do dia a dia e acessos r&#225;pidos para pot&#234;ncia e ra&#237;zes." />
+
+                                        <UniformGrid Grid.Row="2"
+                                                     Rows="2"
+                                                     Columns="4"
+                                                     Margin="0,0,0,16">
+                                            <Button Content="Somar"
+                                                    AutomationProperties.AutomationId="basic_add_button"
+                                                    Tag="Add"
+                                                    Click="BasicOperationClick"
+                                                    Style="{StaticResource ActionButtonStyle}"
+                                                    Margin="0,0,12,12" />
+                                            <Button Content="Subtrair"
+                                                    AutomationProperties.AutomationId="basic_subtract_button"
+                                                    Tag="Subtract"
+                                                    Click="BasicOperationClick"
+                                                    Style="{StaticResource ActionButtonStyle}"
+                                                    Margin="0,0,12,12" />
+                                            <Button Content="Multiplicar"
+                                                    AutomationProperties.AutomationId="basic_multiply_button"
+                                                    Tag="Multiply"
+                                                    Click="BasicOperationClick"
+                                                    Style="{StaticResource ActionButtonStyle}"
+                                                    Margin="0,0,12,12" />
+                                            <Button Content="Dividir"
+                                                    AutomationProperties.AutomationId="basic_divide_button"
+                                                    Tag="Divide"
+                                                    Click="BasicOperationClick"
+                                                    Style="{StaticResource ActionButtonStyle}"
+                                                    Margin="0,0,0,12" />
+                                            <Button Content="Pot&#234;ncia"
+                                                    AutomationProperties.AutomationId="power_button"
+                                                    Tag="Power"
+                                                    Click="PowerOperationClick"
+                                                    Style="{StaticResource ActionButtonStyle}"
+                                                    Margin="0,0,12,0" />
+                                            <Button Content="Raiz quadrada"
+                                                    AutomationProperties.AutomationId="square_root_button"
+                                                    Tag="SquareRoot"
+                                                    Click="PowerOperationClick"
+                                                    Style="{StaticResource ActionButtonStyle}"
+                                                    Margin="0,0,12,0" />
+                                            <Button Content="Raiz c&#250;bica"
+                                                    AutomationProperties.AutomationId="cube_root_button"
+                                                    Tag="CubeRoot"
+                                                    Click="PowerOperationClick"
+                                                    Style="{StaticResource ActionButtonStyle}"
+                                                    Margin="0,0,12,0" />
+                                            <Button Content="Limpar hist&#243;rico"
+                                                    AutomationProperties.AutomationId="clear_history_button"
+                                                    Click="ClearHistoryClick"
+                                                    Style="{StaticResource AccentButtonStyle}" />
+                                        </UniformGrid>
+
+                                        <Grid Grid.Row="3">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="16" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="16" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <StackPanel>
+                                                <TextBlock Style="{StaticResource LabelStyle}" Text="Base" />
+                                                <TextBox x:Name="PowerBaseInput"
+                                                         AutomationProperties.AutomationId="power_base_input"
+                                                         Margin="0,8,0,0"
+                                                         Style="{StaticResource InputStyle}" />
+                                            </StackPanel>
+
+                                            <StackPanel Grid.Column="2">
+                                                <TextBlock Style="{StaticResource LabelStyle}" Text="Expoente" />
+                                                <TextBox x:Name="PowerExponentInput"
+                                                         AutomationProperties.AutomationId="power_exponent_input"
+                                                         Margin="0,8,0,0"
+                                                         Style="{StaticResource InputStyle}" />
+                                            </StackPanel>
+
+                                            <StackPanel Grid.Column="4">
+                                                <TextBlock Style="{StaticResource LabelStyle}" Text="Valor para raiz" />
+                                                <TextBox x:Name="RootInput"
+                                                         AutomationProperties.AutomationId="root_input"
+                                                         Margin="0,8,0,0"
+                                                         Style="{StaticResource InputStyle}" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </Grid>
+                                </ScrollViewer>
+                            </TabItem>
+                            <TabItem Header="Cient&#237;fica"
+                                     AutomationProperties.AutomationId="scientific_tab">
+                                <ScrollViewer AutomationProperties.AutomationId="scientific_tab_scroll_viewer"
+                                              Margin="0,18,0,0"
+                                              VerticalScrollBarVisibility="Auto"
+                                              HorizontalScrollBarVisibility="Disabled"
+                                              CanContentScroll="False">
+                                    <Grid Margin="0,0,4,8">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="18" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="18" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Border Padding="18"
+                                                Background="{StaticResource PanelSoftBrush}"
+                                                BorderBrush="{StaticResource StrongLineBrush}"
+                                                BorderThickness="1"
+                                                CornerRadius="22">
+                                            <StackPanel>
+                                                <TextBlock Style="{StaticResource SectionTitleStyle}" Text="Trigonometria" />
+                                                <TextBlock Margin="0,6,0,14"
+                                                           Style="{StaticResource CaptionStyle}"
+                                                           Text="Seno, cosseno, tangente e fun&#231;&#245;es inversas." />
+                                                <TextBlock Style="{StaticResource LabelStyle}" Text="&#194;ngulo ou valor" />
+                                                <TextBox x:Name="TrigInput"
+                                                         AutomationProperties.AutomationId="trig_input"
+                                                         Margin="0,8,0,16"
+                                                         Style="{StaticResource InputStyle}" />
+                                                <UniformGrid Columns="3">
+                                                    <Button Content="sen"
+                                                            AutomationProperties.AutomationId="sine_button"
+                                                            Tag="Sine"
+                                                            Click="TrigonometryOperationClick"
+                                                            Style="{StaticResource ActionButtonStyle}"
+                                                            Margin="0,0,12,12" />
+                                                    <Button Content="cos"
+                                                            AutomationProperties.AutomationId="cosine_button"
+                                                            Tag="Cosine"
+                                                            Click="TrigonometryOperationClick"
+                                                            Style="{StaticResource ActionButtonStyle}"
+                                                            Margin="0,0,12,12" />
+                                                    <Button Content="tan"
+                                                            AutomationProperties.AutomationId="tangent_button"
+                                                            Tag="Tangent"
+                                                            Click="TrigonometryOperationClick"
+                                                            Style="{StaticResource ActionButtonStyle}"
+                                                            Margin="0,0,0,12" />
+                                                    <Button Content="arcsen"
+                                                            AutomationProperties.AutomationId="arcsine_button"
+                                                            Tag="ArcSine"
+                                                            Click="TrigonometryOperationClick"
+                                                            Style="{StaticResource ActionButtonStyle}"
+                                                            Margin="0,0,12,0" />
+                                                    <Button Content="arccos"
+                                                            AutomationProperties.AutomationId="arccosine_button"
+                                                            Tag="ArcCosine"
+                                                            Click="TrigonometryOperationClick"
+                                                            Style="{StaticResource ActionButtonStyle}"
+                                                            Margin="0,0,12,0" />
+                                                    <Button Content="arctan"
+                                                            AutomationProperties.AutomationId="arctangent_button"
+                                                            Tag="ArcTangent"
+                                                            Click="TrigonometryOperationClick"
+                                                            Style="{StaticResource ActionButtonStyle}" />
+                                                </UniformGrid>
+                                            </StackPanel>
+                                        </Border>
+
+                                        <Border Grid.Column="2"
+                                                Padding="18"
+                                                Background="{StaticResource PanelSoftBrush}"
+                                                BorderBrush="{StaticResource StrongLineBrush}"
+                                                BorderThickness="1"
+                                                CornerRadius="22">
+                                            <StackPanel>
+                                                <TextBlock Style="{StaticResource SectionTitleStyle}" Text="Logaritmos" />
+                                                <TextBlock Margin="0,6,0,14"
+                                                           Style="{StaticResource CaptionStyle}"
+                                                           Text="Natural, base 10 e base personalizada." />
+                                                <TextBlock Style="{StaticResource LabelStyle}" Text="N&#250;mero" />
+                                                <TextBox x:Name="LogInput"
+                                                         AutomationProperties.AutomationId="log_input"
+                                                         Margin="0,8,0,12"
+                                                         Style="{StaticResource InputStyle}" />
+                                                <TextBlock Style="{StaticResource LabelStyle}" Text="Base personalizada" />
+                                                <TextBox x:Name="LogBaseInput"
+                                                         AutomationProperties.AutomationId="log_base_input"
+                                                         Margin="0,8,0,16"
+                                                         Style="{StaticResource InputStyle}" />
+                                                <UniformGrid Columns="3">
+                                                    <Button Content="ln"
+                                                            AutomationProperties.AutomationId="natural_log_button"
+                                                            Tag="NaturalLog"
+                                                            Click="LogarithmOperationClick"
+                                                            Style="{StaticResource ActionButtonStyle}"
+                                                            Margin="0,0,12,0" />
+                                                    <Button Content="log10"
+                                                            AutomationProperties.AutomationId="base10_log_button"
+                                                            Tag="Base10Log"
+                                                            Click="LogarithmOperationClick"
+                                                            Style="{StaticResource ActionButtonStyle}"
+                                                            Margin="0,0,12,0" />
+                                                    <Button Content="log na base"
+                                                            AutomationProperties.AutomationId="custom_log_button"
+                                                            Tag="CustomLog"
+                                                            Click="LogarithmOperationClick"
+                                                            Style="{StaticResource AccentButtonStyle}" />
+                                                </UniformGrid>
+                                            </StackPanel>
+                                        </Border>
+
+                                        <Border Grid.Row="2"
+                                                Grid.ColumnSpan="3"
+                                                Padding="18"
+                                                Background="{StaticResource PanelSoftBrush}"
+                                                BorderBrush="{StaticResource StrongLineBrush}"
+                                                BorderThickness="1"
+                                                CornerRadius="22">
+                                            <StackPanel>
+                                                <TextBlock Style="{StaticResource SectionTitleStyle}" Text="Resumo" />
+                                                <TextBlock Margin="0,8,0,0"
+                                                           Style="{StaticResource CaptionStyle}"
+                                                           Text="O visor superior mostra a &#250;ltima express&#227;o e o resultado atual. O modo angular altera a trigonometria e a forma polar." />
+                                            </StackPanel>
+                                        </Border>
+                                    </Grid>
+                                </ScrollViewer>
+                            </TabItem>
+                            <TabItem Header="Complexos"
+                                     AutomationProperties.AutomationId="complex_tab">
+                                <ScrollViewer AutomationProperties.AutomationId="complex_tab_scroll_viewer"
+                                              Margin="0,18,0,0"
+                                              VerticalScrollBarVisibility="Auto"
+                                              HorizontalScrollBarVisibility="Disabled"
+                                              CanContentScroll="False">
+                                    <Grid Margin="0,0,4,8">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="18" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="18" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Border Padding="18"
+                                                Background="{StaticResource PanelSoftBrush}"
+                                                BorderBrush="{StaticResource StrongLineBrush}"
+                                                BorderThickness="1"
+                                                CornerRadius="22">
+                                            <StackPanel>
+                                                <TextBlock Style="{StaticResource SectionTitleStyle}" Text="z1" />
+                                                <TextBlock Margin="0,6,0,14"
+                                                           Style="{StaticResource CaptionStyle}"
+                                                           Text="a + bi" />
+                                                <TextBlock Style="{StaticResource LabelStyle}" Text="Parte real" />
+                                                <TextBox x:Name="ComplexFirstRealInput"
+                                                         AutomationProperties.AutomationId="complex_first_real_input"
+                                                         Margin="0,8,0,12"
+                                                         Style="{StaticResource InputStyle}" />
+                                                <TextBlock Style="{StaticResource LabelStyle}" Text="Parte imagin&#225;ria" />
+                                                <TextBox x:Name="ComplexFirstImaginaryInput"
+                                                         AutomationProperties.AutomationId="complex_first_imaginary_input"
+                                                         Margin="0,8,0,0"
+                                                         Style="{StaticResource InputStyle}" />
+                                            </StackPanel>
+                                        </Border>
+
+                                        <Border Grid.Column="2"
+                                                Padding="18"
+                                                Background="{StaticResource PanelSoftBrush}"
+                                                BorderBrush="{StaticResource StrongLineBrush}"
+                                                BorderThickness="1"
+                                                CornerRadius="22">
+                                            <StackPanel>
+                                                <TextBlock Style="{StaticResource SectionTitleStyle}" Text="z2" />
+                                                <TextBlock Margin="0,6,0,14"
+                                                           Style="{StaticResource CaptionStyle}"
+                                                           Text="c + di" />
+                                                <TextBlock Style="{StaticResource LabelStyle}" Text="Parte real" />
+                                                <TextBox x:Name="ComplexSecondRealInput"
+                                                         AutomationProperties.AutomationId="complex_second_real_input"
+                                                         Margin="0,8,0,12"
+                                                         Style="{StaticResource InputStyle}" />
+                                                <TextBlock Style="{StaticResource LabelStyle}" Text="Parte imagin&#225;ria" />
+                                                <TextBox x:Name="ComplexSecondImaginaryInput"
+                                                         AutomationProperties.AutomationId="complex_second_imaginary_input"
+                                                         Margin="0,8,0,0"
+                                                         Style="{StaticResource InputStyle}" />
+                                            </StackPanel>
+                                        </Border>
+
+                                        <UniformGrid Grid.Row="2"
+                                                     Grid.ColumnSpan="3"
+                                                     Columns="4">
+                                            <Button Content="Somar z1 + z2"
+                                                    AutomationProperties.AutomationId="complex_add_button"
+                                                    Tag="AddComplex"
+                                                    Click="ComplexOperationClick"
+                                                    Style="{StaticResource ActionButtonStyle}"
+                                                    Margin="0,0,12,0" />
+                                            <Button Content="Multiplicar"
+                                                    AutomationProperties.AutomationId="complex_multiply_button"
+                                                    Tag="MultiplyComplex"
+                                                    Click="ComplexOperationClick"
+                                                    Style="{StaticResource ActionButtonStyle}"
+                                                    Margin="0,0,12,0" />
+                                            <Button Content="M&#243;dulo de z1"
+                                                    AutomationProperties.AutomationId="complex_modulus_button"
+                                                    Tag="Modulus"
+                                                    Click="ComplexOperationClick"
+                                                    Style="{StaticResource ActionButtonStyle}"
+                                                    Margin="0,0,12,0" />
+                                            <Button Content="Polar de z1"
+                                                    AutomationProperties.AutomationId="complex_polar_button"
+                                                    Tag="Polar"
+                                                    Click="ComplexOperationClick"
+                                                    Style="{StaticResource AccentButtonStyle}" />
+                                        </UniformGrid>
+                                    </Grid>
+                                </ScrollViewer>
+                            </TabItem>
+                        </TabControl>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Column="2"
+                        Padding="22"
+                        Background="{StaticResource PanelBrush}"
+                        BorderBrush="{StaticResource LineBrush}"
+                        BorderThickness="1"
+                        CornerRadius="28">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <StackPanel>
+                            <TextBlock FontSize="24"
+                                       FontWeight="SemiBold"
+                                       Foreground="{StaticResource TextBrush}"
+                                       Text="Hist&#243;rico" />
+                            <TextBlock Margin="0,8,0,0"
+                                       Style="{StaticResource CaptionStyle}"
+                                       Text="Sess&#227;o atual da calculadora." />
+                        </StackPanel>
+
+                        <ListBox x:Name="HistoryList"
+                                 AutomationProperties.AutomationId="history_list"
+                                 Grid.Row="1"
+                                 Margin="0,18,0,18"
+                                 Background="Transparent"
+                                 BorderThickness="0"
+                                 Foreground="{StaticResource TextBrush}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Margin="0,0,0,12"
+                                            Padding="14"
+                                            Background="{StaticResource PanelSoftBrush}"
+                                            BorderBrush="{StaticResource LineBrush}"
+                                            BorderThickness="1"
+                                            CornerRadius="16">
+                                        <StackPanel>
+                                            <TextBlock FontFamily="Consolas"
+                                                       Foreground="{StaticResource MutedTextBrush}"
+                                                       Text="{Binding Category}" />
+                                            <TextBlock Margin="0,6,0,0"
+                                                       Foreground="{StaticResource TextBrush}"
+                                                       Text="{Binding Expression}"
+                                                       TextWrapping="Wrap" />
+                                            <TextBlock Margin="0,6,0,0"
+                                                       FontFamily="Consolas"
+                                                       FontSize="18"
+                                                       Foreground="{StaticResource TextBrush}"
+                                                       Text="{Binding Result}" />
+                                            <TextBlock Margin="0,6,0,0"
+                                                       FontSize="12"
+                                                       Foreground="{StaticResource MutedTextBrush}"
+                                                       Text="{Binding TimestampLabel}" />
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <TextBlock Grid.Row="2"
+                                   Style="{StaticResource CaptionStyle}"
+                                   Text="Pacote port&#225;til, hist&#243;rico persistido e distribui&#231;&#227;o pronta." />
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

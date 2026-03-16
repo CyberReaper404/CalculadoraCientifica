@@ -1,0 +1,14 @@
+<Project>
+  <PropertyGroup>
+    <Company>Maria Eduarda Miyashiro</Company>
+    <Authors>Maria Eduarda Miyashiro</Authors>
+    <Product>MM CALC Científica</Product>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Version>1.0.0</Version>
+    <InformationalVersion>1.0.0</InformationalVersion>
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+  </PropertyGroup>
+</Project>
