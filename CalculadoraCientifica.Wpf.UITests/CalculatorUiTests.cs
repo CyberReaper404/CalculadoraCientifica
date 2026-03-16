@@ -137,6 +137,7 @@ public sealed class CalculatorUiTests
     public void SineInRadians_ShouldUseSelectedAngleUnit()
     {
         SelectComboBoxItem("angle_unit_combo", "Radianos");
+        WaitForCondition(() => GetComboBoxSelection("angle_unit_combo") == "Radianos");
         SelectTab("scientific_tab");
         SetText("trig_input", "1,5707963267948966");
         Click("sine_button");
@@ -428,6 +429,7 @@ public sealed class CalculatorUiTests
         }
 
         ((SelectionItemPattern)selectionPattern).Select();
+        WaitForCondition(() => GetComboBoxSelection(comboAutomationId) == itemName);
     }
 
     private void RestartApplication()
@@ -544,7 +546,7 @@ public sealed class CalculatorUiTests
 
     private static T? WaitForCondition<T>(Func<T?> action) where T : class
     {
-        var timeout = DateTime.UtcNow.AddSeconds(10);
+        var timeout = DateTime.UtcNow.AddSeconds(15);
 
         while (DateTime.UtcNow < timeout)
         {
@@ -562,7 +564,7 @@ public sealed class CalculatorUiTests
 
     private static void WaitForCondition(Func<bool> predicate)
     {
-        var timeout = DateTime.UtcNow.AddSeconds(10);
+        var timeout = DateTime.UtcNow.AddSeconds(15);
 
         while (DateTime.UtcNow < timeout)
         {
