@@ -1,14 +1,12 @@
 # MM CALC Científica
 
-[![CI](https://github.com/CyberReaper404/CalculadoraCientifica/actions/workflows/ci.yml/badge.svg)](https://github.com/CyberReaper404/CalculadoraCientifica/actions/workflows/ci.yml)
-![Último commit](https://img.shields.io/github/last-commit/CyberReaper404/CalculadoraCientifica?style=for-the-badge&label=%C3%9Altimo%20commit)
-![Licença](https://img.shields.io/github/license/CyberReaper404/CalculadoraCientifica?style=for-the-badge&label=Licen%C3%A7a)
-![.NET 8](https://img.shields.io/badge/.NET-8.0-111111?style=for-the-badge&logo=dotnet&logoColor=white)
-![WPF](https://img.shields.io/badge/Interface-WPF-1a1a1a?style=for-the-badge&logo=windows&logoColor=white)
-![Windows](https://img.shields.io/badge/Plataforma-Windows-050505?style=for-the-badge&logo=windows11&logoColor=white)
-![Testes](https://img.shields.io/badge/Testes-76%20aprovados-2f2f2f?style=for-the-badge&logo=githubactions&logoColor=white)
-![Segurança](https://img.shields.io/badge/Seguran%C3%A7a-endurecida-202020?style=for-the-badge&logo=shield&logoColor=white)
-![Distribuição](https://img.shields.io/badge/Distribui%C3%A7%C3%A3o-pronta-151515?style=for-the-badge&logo=windows-terminal&logoColor=white)
+[![CI](https://github.com/CyberReaper404/CalculadoraCientifica/actions/workflows/ci.yml/badge.svg?style=flat-square)](https://github.com/CyberReaper404/CalculadoraCientifica/actions/workflows/ci.yml)
+![Último commit](https://img.shields.io/github/last-commit/CyberReaper404/CalculadoraCientifica?style=flat-square&label=%C3%9Altimo%20commit&color=2f2f2f)
+![Licença](https://img.shields.io/github/license/CyberReaper404/CalculadoraCientifica?style=flat-square&label=Licen%C3%A7a&color=111111)
+![C#](https://img.shields.io/badge/C%23-239120?style=flat-square&logo=csharp&logoColor=white)
+![.NET 8](https://img.shields.io/badge/.NET-8-512BD4?style=flat-square&logo=dotnet&logoColor=white)
+![WPF](https://img.shields.io/badge/WPF-0C54C2?style=flat-square&logo=windows&logoColor=white)
+![Windows](https://img.shields.io/badge/Windows-0078D6?style=flat-square&logo=windows11&logoColor=white)
 
 Calculadora científica para Windows desenvolvida em `C# + WPF`, com visual minimalista em preto e branco, foco em usabilidade, empacotamento profissional e cobertura de testes automatizados.
 
